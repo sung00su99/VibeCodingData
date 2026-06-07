@@ -179,6 +179,14 @@
             margin: 8px 0 5px;
             line-height: 1.75;
         }
+        .note-sub {
+            color: #dc2626;
+            font-size: 13.5px;
+            font-weight: 500;
+            margin: 5px 0 4px;
+            line-height: 1.75;
+            padding-left: 16px;
+        }
         .ref-title {
             color: #dc2626;
             font-weight: 700;
@@ -443,9 +451,9 @@ cd ~/work</pre>
 
             <p class="desc">• NVM(Node Version Manager) 설치</p>
             <code class="copyable" onclick="copyCode(this)">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash</code>
-            <p class="sub-desc">※ NVM: node.js의 버전을 관리해주는 매니저</p>
-            <p class="sub-desc">※ node.js란? 브라우저 밖에서도 JavaScript를 독립적으로 실행할 수 있게 해주는 런타임 환경</p>
-            <p class="sub-desc">※ node.js는 버전이 다를 경우 오류 발생, NVM에서 해당 버전을 관리</p>
+            <p class="note-sub">※ NVM: node.js의 버전을 관리해주는 매니저</p>
+            <p class="note-sub">※ node.js란? 브라우저 밖에서도 JavaScript를 독립적으로 실행할 수 있게 해주는 런타임 환경</p>
+            <p class="note-sub">※ node.js는 버전이 다를 경우 오류 발생, NVM에서 해당 버전을 관리</p>
 
             <p class="desc">• NVM 설치 위치 정보를 터미널에 불러옴</p>
             <code class="copyable" onclick="copyCode(this)">export NVM_DIR="$HOME/.nvm"</code>
@@ -455,7 +463,7 @@ cd ~/work</pre>
 
             <p class="desc">• node.js LTS 버전 설치</p>
             <code class="copyable" onclick="copyCode(this)">nvm install --lts</code>
-            <p class="sub-desc">※ LTS(Long Term Support): 장기지원버전으로, 검증된 안정적인 제품을 의미</p>
+            <p class="note-sub">※ LTS(Long Term Support): 장기지원버전으로, 검증된 안정적인 제품을 의미</p>
 
             <p class="desc">• node 버전 확인</p>
             <code class="copyable" onclick="copyCode(this)">node -v</code>
@@ -589,7 +597,7 @@ cd ~/work</pre>
             <div class="step-section">
                 <h3>8) Clone 삭제</h3>
                 <pre class="code-block">rm -rf 폴더명/</pre>
-                <p class="sub-desc">※ -r: 하위 디렉터리 포함, -f: 삭제 확인 없이 강제 실행</p>
+                <p class="note-sub">※ -r: 하위 디렉터리 포함, -f: 삭제 확인 없이 강제 실행</p>
             </div>
         </div>
     </div>
@@ -671,7 +679,7 @@ cd ~/work</pre>
                     <ul style="margin-top:6px">
                         <li class="desc">Application type: <strong>Web application</strong></li>
                         <li class="desc">Authorized redirect URIs 등록 (Supabase API URL 확인)
-                            <p class="note sub-desc">※ <code class="plain">https://[프로젝트ID].supabase.co/auth/v1/callback</code></p>
+                            <p class="note-sub">※ <code class="plain">https://[프로젝트ID].supabase.co/auth/v1/callback</code></p>
                         </li>
                     </ul>
                 </li>
