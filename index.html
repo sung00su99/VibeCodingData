@@ -7,32 +7,64 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
+        /* ===== MICUBE SOLUTION 브랜드 컬러 =====
+           Primary Teal  : #0AAFB8
+           Accent Green  : #3DBB6B
+           Dark Navy     : #1C2D3A
+           Light Teal bg : #E8F7F8
+        ============================================ */
         * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
             font-family: 'Noto Sans KR', 'Malgun Gothic', '맑은 고딕', sans-serif;
-            background: #f0f4f8;
+            background: #EEF6F7;
             color: #1e293b;
             min-height: 100vh;
             font-size: 15px;
         }
 
+        /* ── 헤더 ── */
         header {
-            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
-            color: white;
-            padding: 22px 32px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            background: #ffffff;
+            color: #1C2D3A;
+            padding: 0 32px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+            border-bottom: 3px solid #0AAFB8;
         }
-        header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
-        header p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 16px 0;
+        }
+        .header-text h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0AAFB8;
+            letter-spacing: -0.3px;
+        }
+        .header-text p {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+        .header-logo {
+            height: 48px;
+            object-fit: contain;
+            flex-shrink: 0;
+            margin-left: 24px;
+        }
 
+        /* ── 탭 ── */
         .tabs-wrapper {
             background: #fff;
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid #C8EBEC;
             padding: 0 12px;
             overflow-x: auto;
             white-space: nowrap;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.07);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -51,9 +83,10 @@
             white-space: nowrap;
             font-family: inherit;
         }
-        .tab-btn:hover { color: #2563eb; }
-        .tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; font-weight: 700; }
+        .tab-btn:hover { color: #0AAFB8; }
+        .tab-btn.active { color: #0AAFB8; border-bottom-color: #0AAFB8; font-weight: 700; }
 
+        /* ── 본문 레이아웃 ── */
         .content-wrapper {
             max-width: 960px;
             margin: 28px auto;
@@ -67,22 +100,23 @@
             border-radius: 12px;
             padding: 28px 30px;
             margin-bottom: 20px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
-            border: 1px solid #e2e8f0;
+            box-shadow: 0 1px 4px rgba(10,175,184,0.08);
+            border: 1px solid #C8EBEC;
         }
 
+        /* ── 제목 ── */
         h2 {
             font-size: 18px;
             font-weight: 700;
             color: #0f172a;
             margin-bottom: 18px;
             padding-bottom: 10px;
-            border-bottom: 2px solid #2563eb;
+            border-bottom: 2px solid #0AAFB8;
         }
         h3 {
             font-size: 15px;
             font-weight: 700;
-            color: #1e40af;
+            color: #0A7A80;
             margin: 20px 0 8px;
         }
 
@@ -93,24 +127,24 @@
         ul, ol { padding-left: 22px; }
         li.desc { line-height: 1.85; margin-bottom: 4px; color: #334155; }
 
-        /* 복사 가능한 코드 블록 (파란색) */
+        /* ── 복사 가능한 코드 블록 (티얼) ── */
         code.copyable {
             display: block;
             font-family: 'Consolas', 'D2Coding', 'Courier New', monospace;
             font-size: 13.5px;
-            color: #1d4ed8;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            border-left: 4px solid #3b82f6;
+            color: #0A6B72;
+            background: #E8F7F8;
+            border: 1px solid #A7DDE1;
+            border-left: 4px solid #0AAFB8;
             border-radius: 6px;
-            padding: 9px 14px 9px 12px;
+            padding: 9px 120px 9px 12px;
             margin: 6px 0;
             cursor: pointer;
             transition: background 0.15s, border-color 0.15s;
             position: relative;
             word-break: break-all;
         }
-        code.copyable:hover { background: #dbeafe; border-color: #93c5fd; }
+        code.copyable:hover { background: #D0F0F2; border-color: #0AAFB8; }
         code.copyable::after {
             content: '클릭하여 복사';
             position: absolute;
@@ -118,7 +152,7 @@
             top: 50%;
             transform: translateY(-50%);
             font-size: 11px;
-            color: #93c5fd;
+            color: #7ECFCE;
             font-family: sans-serif;
             white-space: nowrap;
         }
@@ -129,24 +163,24 @@
         }
         code.copyable.copied::after { content: '복사됨'; color: #86efac; }
 
-        /* 테이블 내 인라인 복사 코드 */
+        /* ── 테이블 내 인라인 복사 코드 ── */
         code.copyable-inline {
             display: inline-block;
             font-family: 'Consolas', 'D2Coding', 'Courier New', monospace;
             font-size: 13px;
-            color: #1d4ed8;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
+            color: #0A6B72;
+            background: #E8F7F8;
+            border: 1px solid #A7DDE1;
             border-radius: 4px;
             padding: 3px 10px;
             cursor: pointer;
             transition: background 0.15s;
             white-space: nowrap;
         }
-        code.copyable-inline:hover { background: #dbeafe; }
+        code.copyable-inline:hover { background: #D0F0F2; }
         code.copyable-inline.copied { background: #dcfce7; border-color: #86efac; color: #15803d; }
 
-        /* 일반 코드 (비복사) */
+        /* ── 일반 코드 (비복사) ── */
         code.plain {
             font-family: 'Consolas', 'D2Coding', 'Courier New', monospace;
             font-size: 13px;
@@ -157,13 +191,13 @@
             padding: 3px 8px;
         }
 
-        /* 비복사 코드 블록 */
+        /* ── 비복사 코드 블록 ── */
         pre.code-block {
             font-family: 'Consolas', 'D2Coding', 'Courier New', monospace;
             font-size: 13px;
             color: #374151;
-            background: #f8fafc;
-            border: 1px solid #e2e8f0;
+            background: #F4FAFA;
+            border: 1px solid #C8EBEC;
             border-radius: 6px;
             padding: 10px 14px;
             margin: 6px 0;
@@ -171,7 +205,7 @@
             word-break: break-all;
         }
 
-        /* 빨간 노트 */
+        /* ── 빨간 노트 ── */
         .note {
             color: #dc2626;
             font-size: 13.5px;
@@ -194,12 +228,12 @@
             margin: 16px 0 8px;
         }
 
-        /* URL 스타일 */
-        .url { color: #2563eb; font-family: monospace; font-size: 13.5px; }
+        /* ── URL ── */
+        .url { color: #0AAFB8; font-family: monospace; font-size: 13.5px; }
         a.url { text-decoration: none; }
         a.url:hover { text-decoration: underline; }
 
-        /* 테이블 */
+        /* ── 테이블 ── */
         table {
             width: 100%;
             border-collapse: collapse;
@@ -207,7 +241,7 @@
             font-size: 14px;
         }
         table th {
-            background: #334155;
+            background: #1B4A52;
             color: #fff;
             padding: 10px 14px;
             text-align: left;
@@ -216,22 +250,22 @@
         }
         table td {
             padding: 9px 14px;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px solid #C8EBEC;
             line-height: 1.65;
             vertical-align: middle;
         }
-        table tr:nth-child(even) td { background: #f8fafc; }
-        table tr:hover td { background: #f0f9ff; transition: background 0.1s; }
+        table tr:nth-child(even) td { background: #F4FAFA; }
+        table tr:hover td { background: #DDF4F5; transition: background 0.1s; }
 
         .step-section { margin: 6px 0 18px; }
 
-        /* 토스트 */
+        /* ── 토스트 ── */
         #toast {
             position: fixed;
             bottom: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(16px);
-            background: #1e293b;
+            background: #1B4A52;
             color: white;
             padding: 10px 26px;
             border-radius: 24px;
@@ -240,19 +274,24 @@
             transition: all 0.25s ease;
             pointer-events: none;
             z-index: 9999;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+            box-shadow: 0 4px 16px rgba(10,175,184,0.35);
         }
         #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-        /* 섹션 구분선 */
-        .divider { border: none; border-top: 1px dashed #e2e8f0; margin: 18px 0; }
+        /* ── 섹션 구분선 ── */
+        .divider { border: none; border-top: 1px dashed #C8EBEC; margin: 18px 0; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>바이브 코딩 교육 자료</h1>
-    <p>파란색 명령어를 클릭하면 클립보드에 복사됩니다.</p>
+    <div class="header-inner">
+        <div class="header-text">
+            <h1>바이브 코딩 교육 자료</h1>
+            <p>명령어를 클릭하면 클립보드에 복사됩니다.</p>
+        </div>
+        <img src="micube.jpg" alt="MICUBE SOLUTION" class="header-logo">
+    </div>
 </header>
 
 <div class="tabs-wrapper">
