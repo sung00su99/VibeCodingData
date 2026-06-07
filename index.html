@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>바이브 코딩 교육 자료</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Noto Sans KR', 'Malgun Gothic', '맑은 고딕', sans-serif;
+            background: #f0f4f8;
+            color: #1e293b;
+            min-height: 100vh;
+            font-size: 15px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e40af 0%, #2563eb 100%);
+            color: white;
+            padding: 22px 32px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        header h1 { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; }
+        header p { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+
+        .tabs-wrapper {
+            background: #fff;
+            border-bottom: 2px solid #e2e8f0;
+            padding: 0 12px;
+            overflow-x: auto;
+            white-space: nowrap;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .tab-btn {
+            display: inline-block;
+            padding: 14px 16px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #64748b;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+            white-space: nowrap;
+            font-family: inherit;
+        }
+        .tab-btn:hover { color: #2563eb; }
+        .tab-btn.active { color: #2563eb; border-bottom-color: #2563eb; font-weight: 700; }
+
+        .content-wrapper {
+            max-width: 960px;
+            margin: 28px auto;
+            padding: 0 16px 40px;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        .section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 28px 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            border: 1px solid #e2e8f0;
+        }
+
+        h2 {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #2563eb;
+        }
+        h3 {
+            font-size: 15px;
+            font-weight: 700;
+            color: #1e40af;
+            margin: 20px 0 8px;
+        }
+
+        .desc { line-height: 1.85; margin-bottom: 5px; color: #334155; }
+        .sub-desc { line-height: 1.85; margin-bottom: 4px; color: #475569; padding-left: 16px; }
+        .sub2-desc { line-height: 1.85; margin-bottom: 4px; color: #475569; padding-left: 32px; }
+
+        ul, ol { padding-left: 22px; }
+        li.desc { line-height: 1.85; margin-bottom: 4px; color: #334155; }
+
+        /* 복사 가능한 코드 블록 (파란색) */
+        code.copyable {
+            display: block;
+            font-family: 'Consolas', 'D2Coding', 'Courier New', monospace;
+            font-size: 13.5px;
+            color: #1d4ed8;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-left: 4px solid #3b82f6;
+            border-radius: 6px;
+            padding: 9px 14px 9px 12px;
+            margin: 6px 0;
+            cursor: pointer;
+            transition: background 0.15s, border-color 0.15s;
+            position: relative;
+            word-break: break-all;
+        }
+        code.copyable:hover { background: #dbeafe; border-color: #93c5fd; }
+        code.copyable::after {
+            content: '📋 복사';
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 11px;
+            color: #93c5fd;
+            font-family: sans-serif;
+            white-space: nowrap;
+        }
+        code.copyable.copied {
+            background: #dcfce7 !important;
+            border-color: #86efac !important;
+            color: #15803d !important;
+        }
+        code.copyable.copied::after { content: '✓ 복사됨'; color: #86efac; }
+
+        /* 테이블 내 인라인 복사 코드 */
+        code.copyable-inline {
+            display: inline-block;
+            font-family: 'Consolas', 'D2Coding', 'Courier New', monospace;
+            font-size: 13px;
+            color: #1d4ed8;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 4px;
+            padding: 3px 10px;
+            cursor: pointer;
+            transition: background 0.15s;
+            white-space: nowrap;
+        }
+        code.copyable-inline:hover { background: #dbeafe; }
+        code.copyable-inline.copied { background: #dcfce7; border-color: #86efac; color: #15803d; }
+
+        /* 일반 코드 (비복사) */
+        code.plain {
+            font-family: 'Consolas', 'D2Coding', 'Courier New', monospace;
+            font-size: 13px;
+            color: #374151;
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            padding: 3px 8px;
+        }
+
+        /* 비복사 코드 블록 */
+        pre.code-block {
+            font-family: 'Consolas', 'D2Coding', 'Courier New', monospace;
+            font-size: 13px;
+            color: #374151;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 10px 14px;
+            margin: 6px 0;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        /* 빨간 노트 */
+        .note {
+            color: #dc2626;
+            font-size: 13.5px;
+            font-weight: 500;
+            margin: 8px 0 5px;
+            line-height: 1.75;
+        }
+        .ref-title {
+            color: #dc2626;
+            font-weight: 700;
+            font-size: 14px;
+            margin: 16px 0 8px;
+        }
+
+        /* URL 스타일 */
+        .url { color: #2563eb; font-family: monospace; font-size: 13.5px; }
+        a.url { text-decoration: none; }
+        a.url:hover { text-decoration: underline; }
+
+        /* 테이블 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 10px 0 4px;
+            font-size: 14px;
+        }
+        table th {
+            background: #334155;
+            color: #fff;
+            padding: 10px 14px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        table td {
+            padding: 9px 14px;
+            border-bottom: 1px solid #e2e8f0;
+            line-height: 1.65;
+            vertical-align: middle;
+        }
+        table tr:nth-child(even) td { background: #f8fafc; }
+        table tr:hover td { background: #f0f9ff; transition: background 0.1s; }
+
+        .step-section { margin: 6px 0 18px; }
+
+        /* 토스트 */
+        #toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(16px);
+            background: #1e293b;
+            color: white;
+            padding: 10px 26px;
+            border-radius: 24px;
+            font-size: 14px;
+            opacity: 0;
+            transition: all 0.25s ease;
+            pointer-events: none;
+            z-index: 9999;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+        /* 섹션 구분선 */
+        .divider { border: none; border-top: 1px dashed #e2e8f0; margin: 18px 0; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>바이브 코딩 교육 자료</h1>
+    <p>파란색 명령어를 클릭하면 클립보드에 복사됩니다.</p>
+</header>
+
+<div class="tabs-wrapper">
+    <button class="tab-btn active" onclick="showTab(0)">00. 바이브 코딩의 개요</button>
+    <button class="tab-btn" onclick="showTab(1)">01. 환경설정</button>
+    <button class="tab-btn" onclick="showTab(2)">02. AI Code Agent 설치</button>
+    <button class="tab-btn" onclick="showTab(3)">03. GitHub 배포</button>
+    <button class="tab-btn" onclick="showTab(4)">04. Supabase 배포</button>
+    <button class="tab-btn" onclick="showTab(5)">05. 인증</button>
+    <button class="tab-btn" onclick="showTab(6)">06. 오픈소스 활용</button>
+</div>
+
+<div class="content-wrapper">
+
+    <!-- ===== TAB 0: 바이브 코딩의 개요 ===== -->
+    <div class="tab-content active" id="tab-0">
+        <div class="section">
+            <h2>1. 바이브 코딩의 개요</h2>
+            <ul>
+                <li class="desc">AI 코딩은 인공지능을 활용한 모든 코딩 방식을 아우르는 포괄적 개념</li>
+                <li class="desc">GitHub Copilot, ChatGPT, Claude, Gemini 등의 AI 도구를 활용해 코드 자동 완성, 버그 탐지, 코드 설명 등을 지원</li>
+                <li class="desc">개발자는 직관과 큰 그림을 담당하고, 구체적인 구현은 AI가 맡는 협업 방식</li>
+                <li class="desc">코드의 작동 원리를 완전히 이해하지 않아도 개발이 가능하지만, '기술을 전혀 몰라도 개발할 수 있다'는 것은 다소 과장에 가까움</li>
+                <li class="sub-desc">→ 기술을 알아야 이후의 검증을 직접 하거나, 또는 검증 조건을 규정할 수 있음</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- ===== TAB 1: 환경설정 ===== -->
+    <div class="tab-content" id="tab-1">
+        <div class="section">
+            <h2>1. WSL2 (Windows Subsystem for Linux 2) 설치</h2>
+            <p class="desc">- 윈도우에서 리눅스 애플리케이션을 구동하게 해주는(정확하게 말하면 Linux system call을 처리해주는) 호환성 레이어로, 리눅스 커널의 기능을 제공</p>
+            <p class="sub-desc">(NT 환경에서 리눅스 OS를 사용할 수 있도록 연결해주는 역할)</p>
+
+            <div class="step-section">
+                <h3>1) WINDOWS 기능 설치</h3>
+                <p class="desc">(1) 제어판 &gt; 프로그램 &gt; 프로그램 및 기능 &gt; Windows 기능 켜기 또는 끄기</p>
+                <p class="desc">(2) Linux용 윈도우 하위시스템 켜기, 가상 머신 플랫폼 켜기</p>
+                <p class="desc">(3) 프롬프트 환경 실행</p>
+                <code class="copyable" onclick="copyCode(this)">cmd.exe</code>
+                <p class="desc">(4) 리눅스 설치</p>
+                <code class="copyable" onclick="copyCode(this)">wsl --install Ubuntu-22.04</code>
+                <p class="desc">• 설치 배포 버전 확인</p>
+                <code class="copyable" onclick="copyCode(this)">wsl -l -v</code>
+                <p class="desc">• 종료</p>
+                <code class="copyable" onclick="copyCode(this)">wsl --terminate Ubuntu-22.04</code>
+                <p class="desc">• 삭제</p>
+                <code class="copyable" onclick="copyCode(this)">wsl --unregister Ubuntu-22.04</code>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>2. GIT 설정</h2>
+
+            <div class="step-section">
+                <h3>1) GitHub 계정 생성</h3>
+                <p class="desc"><a class="url" href="https://github.com/" target="_blank">https://github.com/</a></p>
+            </div>
+
+            <div class="step-section">
+                <h3>2) 작업 디렉토리 생성 (GitHub에서 Repository 생성)</h3>
+                <p class="desc"><a class="url" href="https://github.com/new" target="_blank">https://github.com/new</a></p>
+            </div>
+
+            <div class="step-section">
+                <h3>3) 작업 폴더 생성</h3>
+                <pre class="code-block">mkdir ~/work
+cd ~/work</pre>
+            </div>
+
+            <div class="step-section">
+                <h3>4) git 설정</h3>
+                <code class="copyable" onclick="copyCode(this)">git config --global user.name "사용자이름"</code>
+                <code class="copyable" onclick="copyCode(this)">git config --global user.email 이메일주소</code>
+                <p class="desc">• 다른 작업자의 변경 사항 Update(pull)을 할 경우 Merge 방식으로 처리</p>
+                <code class="copyable" onclick="copyCode(this)">git config --global pull.rebase false</code>
+                <p class="desc">• 적용 사항 확인</p>
+                <code class="copyable" onclick="copyCode(this)">git config --global --list</code>
+            </div>
+
+            <p class="ref-title">참고 1 &gt; 설정 범위 3단계</p>
+            <table>
+                <thead>
+                    <tr><th>범위</th><th>옵션</th><th>적용대상</th><th>저장 위치</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>시스템 전체</td>
+                        <td><code class="plain">--system</code></td>
+                        <td>PC의 모든 사용자</td>
+                        <td><code class="plain">/etc/gitconfig</code></td>
+                    </tr>
+                    <tr>
+                        <td>현재 사용자</td>
+                        <td><code class="plain">--global</code></td>
+                        <td>내 계정의 모든 저장소</td>
+                        <td><code class="plain">~/.gitconfig</code></td>
+                    </tr>
+                    <tr>
+                        <td>현재 저장소</td>
+                        <td><code class="plain">--local</code></td>
+                        <td>지금 이 프로젝트만</td>
+                        <td><code class="plain">.git/config</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <hr class="divider">
+
+            <div class="step-section">
+                <h3>5) SSH 키 생성 및 설정</h3>
+                <p class="desc">• SSH 키 생성</p>
+                <code class="copyable" onclick="copyCode(this)">ssh-keygen</code>
+                <p class="desc">• 생성 키 확인</p>
+                <code class="copyable" onclick="copyCode(this)">cat ~/.ssh/id_rsa.pub</code>
+                <p class="desc">• 생성된 공개키를 GitHub에 붙여넣기</p>
+                <p class="sub-desc">Settings → SSH and GPG Keys → New SSH key 클릭 후 붙여넣기</p>
+                <p class="desc">• 연결 확인</p>
+                <code class="copyable" onclick="copyCode(this)">ssh -T git@github.com</code>
+                <p class="note">※ 성공하면 "Hi [username]! You've successfully authenticated…" 메시지 출력</p>
+                <p class="note">※ SSH 키는 WSL2와 GitHub가 통신할 때 필요한 인증 수단</p>
+            </div>
+
+            <p class="ref-title">참고 2 &gt; SSH 방식과 HTTPS 방식의 차이점</p>
+            <table>
+                <thead>
+                    <tr><th>구분</th><th>SSH</th><th>HTTPS</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>주소 형태</td>
+                        <td><code class="plain">git@github.com:user/repo.git</code></td>
+                        <td><code class="plain">https://github.com/user/repo.git</code></td>
+                    </tr>
+                    <tr>
+                        <td>인증 수단</td>
+                        <td>SSH 키 (개인키 + 공개키)</td>
+                        <td>아이디 + Personal Access Token</td>
+                    </tr>
+                    <tr>
+                        <td>최초 설정</td>
+                        <td>복잡 (키 생성 + GitHub 등록)</td>
+                        <td>간단</td>
+                    </tr>
+                    <tr>
+                        <td>매번 인증</td>
+                        <td>불필요 (키가 자동 처리)</td>
+                        <td>토큰 입력 필요 (캐시 설정 전까지)</td>
+                    </tr>
+                    <tr>
+                        <td>보안성</td>
+                        <td>높음</td>
+                        <td>보통</td>
+                    </tr>
+                    <tr>
+                        <td>방화벽 문제</td>
+                        <td>22번 포트 차단 시 막힘</td>
+                        <td>443번 포트 사용 (거의 안 막힘)</td>
+                    </tr>
+                    <tr>
+                        <td>실무 선호도</td>
+                        <td>개발자 환경에서 선호</td>
+                        <td>간단한 작업 / CI 환경에서 사용</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p class="note">※ SSH는 한 번 설정하면 편하고 안전, HTTPS는 설정은 쉽지만 매번 토큰 관리 필요</p>
+
+            <hr class="divider">
+
+            <div class="step-section">
+                <h3>6) Clone</h3>
+                <p class="desc">- GitHub 서버에 있는 원격 저장소를 내 PC(WSL)로 통째로 복사해오는 명령어</p>
+                <code class="copyable" onclick="copyCode(this)">git clone git@github.com:Username/repo-name.git</code>
+                <p class="desc">• Clone 해제</p>
+                <code class="copyable" onclick="copyCode(this)">rm -rf repo-name/</code>
+            </div>
+
+            <p class="note">※ HTTPS 환경에서 SSH 환경으로 변경</p>
+            <p class="desc">• 현재 방식 확인</p>
+            <code class="copyable" onclick="copyCode(this)">git remote -v</code>
+            <p class="desc">• SSH 방식으로 URL 변경</p>
+            <code class="copyable" onclick="copyCode(this)">git remote set-url origin git@github.com:username/repo_name.git</code>
+        </div>
+    </div>
+
+    <!-- ===== TAB 2: AI Code Agent 설치 ===== -->
+    <div class="tab-content" id="tab-2">
+        <div class="section">
+            <h2>1. AI Coding Agent 환경 설치</h2>
+            <p class="desc">- 코드 작업을 자율적으로 수행하는 AI 도구</p>
+
+            <p class="desc" style="margin-top:14px">• WSL(Ubuntu) 패키지를 최신 상태로 업데이트</p>
+            <code class="copyable" onclick="copyCode(this)">sudo apt update && sudo apt upgrade -y</code>
+
+            <p class="desc">• NVM(Node Version Manager) 설치</p>
+            <code class="copyable" onclick="copyCode(this)">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash</code>
+            <p class="sub-desc">※ NVM: node.js의 버전을 관리해주는 매니저</p>
+            <p class="sub-desc">※ node.js란? 브라우저 밖에서도 JavaScript를 독립적으로 실행할 수 있게 해주는 런타임 환경</p>
+            <p class="sub-desc">※ node.js는 버전이 다를 경우 오류 발생, NVM에서 해당 버전을 관리</p>
+
+            <p class="desc">• NVM 설치 위치 정보를 터미널에 불러옴</p>
+            <code class="copyable" onclick="copyCode(this)">export NVM_DIR="$HOME/.nvm"</code>
+
+            <p class="desc">• NVM을 현재 터미널에서 실제로 활성화하는 명령어</p>
+            <code class="copyable" onclick="copyCode(this)">source "$NVM_DIR/nvm.sh"</code>
+
+            <p class="desc">• node.js LTS 버전 설치</p>
+            <code class="copyable" onclick="copyCode(this)">nvm install --lts</code>
+            <p class="sub-desc">※ LTS(Long Term Support): 장기지원버전으로, 검증된 안정적인 제품을 의미</p>
+
+            <p class="desc">• node 버전 확인</p>
+            <code class="copyable" onclick="copyCode(this)">node -v</code>
+
+            <p class="desc">• npm 버전 확인</p>
+            <code class="copyable" onclick="copyCode(this)">npm -v</code>
+        </div>
+
+        <div class="section">
+            <h2>2. Claude 설치</h2>
+            <code class="copyable" onclick="copyCode(this)">npm install -g @anthropic-ai/claude-code</code>
+        </div>
+
+        <div class="section">
+            <h2>3. Gemini CLI 설치</h2>
+            <code class="copyable" onclick="copyCode(this)">npm install -g @google/gemini-cli</code>
+            <p class="note" style="margin-top:10px">※ 본인은 Claude를 통해 개발하고 있으나 비용이 발생하여 Gemini CLI 설치도 함께 포함 (Gemini는 무료로 이용 가능)</p>
+            <p class="note">※ 문서 및 진행은 Claude 기준으로 진행</p>
+        </div>
+
+        <div class="section">
+            <h2>4. AI Code Agent 실행</h2>
+            <pre class="code-block">cd your-project</pre>
+            <code class="copyable" onclick="copyCode(this)">claude</code>
+
+            <p class="ref-title">참고 1 &gt; Claude Code 실행 방법</p>
+            <table>
+                <thead>
+                    <tr><th>실행 명령어</th><th>구분</th><th>영구 여부</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code class="copyable-inline" onclick="copyCode(this)">claude</code></td>
+                        <td>기본 실행</td>
+                        <td>N</td>
+                    </tr>
+                    <tr>
+                        <td><code class="copyable-inline" onclick="copyCode(this)">claude --dangerously-skip-permissions</code></td>
+                        <td>확인 질문 없이 실행</td>
+                        <td>N</td>
+                    </tr>
+                    <tr>
+                        <td><code class="copyable-inline" onclick="copyCode(this)">claude config set -g dangerouslySkipPermissions true</code></td>
+                        <td>확인 질문 없이 실행</td>
+                        <td>Y</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>5. 로그인</h2>
+            <ul>
+                <li class="desc">스타일 설정</li>
+                <li class="desc">로그인 방법 선택</li>
+                <li class="desc">Pro 또는 Max 선택 → URL 복사 후 해당 URL로 접속하여 인증 → 인증 코드 복사 후 터미널에 붙여넣기</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>6. 개발 진행</h2>
+            <p class="desc">환경설정 완료 후 프로젝트 폴더에서 Claude Code를 실행하여 개발을 시작합니다.</p>
+        </div>
+    </div>
+
+    <!-- ===== TAB 3: GitHub 배포 ===== -->
+    <div class="tab-content" id="tab-3">
+        <div class="section">
+            <h2>1. GitHub 배포</h2>
+            <p class="desc">- GitHub에서 제공하는 정적 웹사이트 호스팅 서비스</p>
+            <p class="desc">- 별도의 서버 없이 HTML, CSS, JavaScript로 바로 배포 가능</p>
+            <p class="desc">- 배포를 위해서는 Public Repository 생성 필요 (최초 프로젝트 생성 시 Public이라면 아래 명령어 중 일부는 불필요함)</p>
+
+            <div class="step-section">
+                <h3>1) 현재 폴더를 Git 저장소로 초기화</h3>
+                <pre class="code-block">git init   # git clone으로 가져온 경우 불필요 (clone에 이미 포함되어 있음)</pre>
+            </div>
+
+            <div class="step-section">
+                <h3>2) 배포 파일 선택</h3>
+                <code class="copyable" onclick="copyCode(this)">git add .</code>
+
+                <p class="ref-title" style="margin-top:14px">참고 1 &gt; 배포 파일 선택 명령어 비교</p>
+                <table>
+                    <thead>
+                        <tr><th>명령어</th><th>의미</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="copyable-inline" onclick="copyCode(this)">git add .</code></td>
+                            <td>전체 변경 파일 추가</td>
+                        </tr>
+                        <tr>
+                            <td><code class="copyable-inline" onclick="copyCode(this)">git add 파일명.확장자</code></td>
+                            <td>특정 파일만 추가</td>
+                        </tr>
+                        <tr>
+                            <td><code class="copyable-inline" onclick="copyCode(this)">git add 폴더/</code></td>
+                            <td>특정 폴더만 추가</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="step-section">
+                <h3>3) Commit</h3>
+                <code class="copyable" onclick="copyCode(this)">git commit -m "커밋 메시지"</code>
+            </div>
+
+            <div class="step-section">
+                <h3>4) 브랜치 이름 변경 (master → main)</h3>
+                <code class="copyable" onclick="copyCode(this)">git branch -M main</code>
+            </div>
+
+            <div class="step-section">
+                <h3>5) 원격 저장소 연결</h3>
+                <code class="copyable" onclick="copyCode(this)">git remote add origin git@github.com:username/repo_name.git</code>
+            </div>
+
+            <div class="step-section">
+                <h3>6) 배포 (Push)</h3>
+                <code class="copyable" onclick="copyCode(this)">git push origin main</code>
+            </div>
+
+            <div class="step-section">
+                <h3>7) 최신 소스 업데이트 (여러 명이 함께 작업할 때)</h3>
+                <code class="copyable" onclick="copyCode(this)">git pull origin main</code>
+                <p class="note">※ push 실행 중 원격에 최신 커밋이 있다면 오류 발생 — 먼저 pull 후 push</p>
+            </div>
+
+            <div class="step-section">
+                <h3>8) Clone 삭제</h3>
+                <pre class="code-block">rm -rf 폴더명/</pre>
+                <p class="sub-desc">※ -r: 하위 디렉터리 포함, -f: 삭제 확인 없이 강제 실행</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 4: Supabase 배포 ===== -->
+    <div class="tab-content" id="tab-4">
+        <div class="section">
+            <h2>1. Supabase 배포</h2>
+            <ul>
+                <li class="desc">Backend-as-a-Service</li>
+                <li class="desc">PostgreSQL 기반의 관계형 데이터베이스 제공</li>
+                <li class="desc">인증, DB, 스토리지, 실시간 기능을 통합 제공</li>
+                <li class="desc">서버를 직접 운영하지 않고도 풀스택 개발 가능</li>
+                <li class="desc">2개의 프로젝트까지 무료로 사용 가능</li>
+            </ul>
+            <p class="note" style="margin-top:12px">※ 프로젝트에 따라 인증 절차는 다르며, 개발자 상황에 따라 인증 절차 확인 후 처리 필요</p>
+
+            <div class="step-section">
+                <h3>1) Supabase 프로젝트 생성</h3>
+                <p class="desc">- <a class="url" href="https://supabase.com" target="_blank">https://supabase.com</a> 접속 → 회원가입 (GitHub 계정으로 가능)</p>
+            </div>
+
+            <div class="step-section">
+                <h3>2) 프로젝트 생성 후 아래 값 별도 저장</h3>
+                <table>
+                    <thead>
+                        <tr><th>이름</th><th>설명</th><th>위치</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>API URL</strong></td>
+                            <td>Supabase 프로젝트의 주소 (엔드포인트)</td>
+                            <td>Integrations → Data API → API_URL</td>
+                        </tr>
+                        <tr>
+                            <td><strong>anon public key</strong></td>
+                            <td>일반 사용자(비로그인/로그인)가 사용하는 키</td>
+                            <td>Settings → API → anon public key</td>
+                        </tr>
+                        <tr>
+                            <td><strong>service_role key</strong></td>
+                            <td>관리자 전용 키로 모든 데이터 접근 가능 · 외부 노출 금지</td>
+                            <td>Settings → API → service_role key</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="step-section">
+                <h3>3) Table 생성</h3>
+                <p class="desc">- SQL Editor 실행 후 Table 생성 (직접 쿼리 실행)</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TAB 5: 인증 ===== -->
+    <div class="tab-content" id="tab-5">
+        <div class="section">
+            <h2>1. Supabase 이메일 인증</h2>
+            <ol style="padding-left:22px">
+                <li class="desc">Authentication → Providers → Email 활성화</li>
+                <li class="desc">Authentication → URL Configuration → Site URL 에 GitHub Pages URL 입력
+                    <p class="sub-desc">예) <code class="plain">https://username.github.io</code></p>
+                </li>
+                <li class="desc">Authentication → URL Configuration → Redirect URLs 입력
+                    <p class="sub-desc">예) <code class="plain">https://username.github.io/repo_name/</code></p>
+                </li>
+            </ol>
+            <p class="note" style="margin-top:10px">※ 이메일 인증 없이 바로 로그인하려면 "Confirm email" 비활성화</p>
+        </div>
+
+        <div class="section">
+            <h2>2. Google 인증</h2>
+            <ol style="padding-left:22px">
+                <li class="desc"><a class="url" href="https://console.cloud.google.com" target="_blank">https://console.cloud.google.com</a> 접속</li>
+                <li class="desc">프로젝트 생성</li>
+                <li class="desc">APIs &amp; Services → OAuth consent screen → External 선택 → 앱 이름/이메일 입력 후 저장</li>
+                <li class="desc">APIs &amp; Services → Credentials → Create Credentials → OAuth client ID
+                    <ul style="margin-top:6px">
+                        <li class="desc">Application type: <strong>Web application</strong></li>
+                        <li class="desc">Authorized redirect URIs 등록 (Supabase API URL 확인)
+                            <p class="note sub-desc">※ <code class="plain">https://[프로젝트ID].supabase.co/auth/v1/callback</code></p>
+                        </li>
+                    </ul>
+                </li>
+                <li class="desc">Supabase에 Google 등록
+                    <ul style="margin-top:6px">
+                        <li class="desc">Supabase 대시보드 → Authentication → Providers → <strong>Google</strong> 활성화</li>
+                        <li class="desc">Client ID, Client Secret 붙여넣기 → Save</li>
+                    </ul>
+                </li>
+            </ol>
+        </div>
+
+        <div class="section">
+            <h2>3. GitHub 인증</h2>
+            <ol style="padding-left:22px">
+                <li class="desc">GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
+                    <ul style="margin-top:6px">
+                        <li class="desc">Application name: 자유</li>
+                        <li class="desc">Homepage URL: <code class="plain">https://username.github.io/repo-name/</code></li>
+                        <li class="desc">Authorization callback URL:
+                            <pre class="code-block" style="margin-top:6px">https://[프로젝트ID].supabase.co/auth/v1/callback</pre>
+                        </li>
+                    </ul>
+                </li>
+                <li class="desc">생성 후 <strong>Client ID</strong> 확인, <strong>Generate a new client secret</strong> 클릭해서 <strong>Client Secret</strong> 복사</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- ===== TAB 6: 오픈소스 활용 ===== -->
+    <div class="tab-content" id="tab-6">
+        <div class="section">
+            <h2>1. SpecKit 이란?</h2>
+            <p class="desc">Spec Kit은 GitHub에서 만든 오픈소스 도구로, Spec-Driven Development(SDD, 사양 중심 개발) 방법론을 실천하게 해주는 CLI 툴킷</p>
+
+            <div class="step-section">
+                <h3>1) 설치 및 프로젝트 초기화</h3>
+                <p class="desc">- uv 설치</p>
+                <code class="copyable" onclick="copyCode(this)">sudo snap install astral-uv --classic</code>
+
+                <p class="desc">- spec-kit 설치</p>
+                <code class="copyable" onclick="copyCode(this)">uv tool install specify-cli --from git+https://github.com/github/spec-kit.git</code>
+
+                <p class="desc">- 프로그램 초기화</p>
+                <code class="copyable" onclick="copyCode(this)">specify init</code>
+            </div>
+
+            <p class="ref-title">참조 1 &gt; 개발 워크플로우 진행 순서</p>
+            <table>
+                <thead>
+                    <tr><th>명령어</th><th>설명</th><th>생성 파일</th><th>저장 위치</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code class="plain">/speckit.specify</code></td>
+                        <td>프로젝트의 핵심 규칙과 방향성을 설정</td>
+                        <td><code class="plain">spec.md</code></td>
+                        <td><code class="plain">specs/001-feature-name/</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="plain">/speckit.plan</code></td>
+                        <td>기술 스택과 아키텍처 선택을 제공하면 AI가 구현 계획 생성</td>
+                        <td><code class="plain">plan.md</code></td>
+                        <td><code class="plain">specs/001-feature-name/</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="plain">/speckit.task</code></td>
+                        <td>구현 계획을 실행 가능한 단위 태스크로 분해</td>
+                        <td><code class="plain">tasks.md</code></td>
+                        <td><code class="plain">specs/001-feature-name/</code></td>
+                    </tr>
+                    <tr>
+                        <td><code class="plain">/speckit.implement</code></td>
+                        <td>AI 에이전트가 계획을 실행하여 실제 코드를 생성</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>2. Matt Pocock의 Skills 중 /grill-with-docs</h2>
+            <ul>
+                <li class="desc">Matt Pocock이 개발한 오픈소스 도구로, 에이전트가 만족할 때까지 작업자에게 질문을 계속 던지며 질문이 완성되면 CONTEXT.md에 기록함</li>
+                <li class="desc">AI 코딩의 실패 원인이 모호한 질문에서 나온다는 점에서 시작된 도구</li>
+            </ul>
+
+            <div class="step-section">
+                <h3>설치</h3>
+                <code class="copyable" onclick="copyCode(this)">npx skills@latest add mattpocock/skills</code>
+            </div>
+        </div>
+    </div>
+
+</div><!-- /content-wrapper -->
+
+<div id="toast">복사되었습니다 ✓</div>
+
+<script>
+    function showTab(n) {
+        document.querySelectorAll('.tab-btn').forEach(function(btn, i) {
+            btn.classList.toggle('active', i === n);
+        });
+        document.querySelectorAll('.tab-content').forEach(function(el, i) {
+            el.classList.toggle('active', i === n);
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function copyCode(el) {
+        var text = el.textContent.replace(/📋 복사|✓ 복사됨/g, '').trim();
+        var done = function() {
+            el.classList.add('copied');
+            setTimeout(function() { el.classList.remove('copied'); }, 1800);
+            showToast();
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(text).then(done).catch(function() { fallback(text, done); });
+        } else {
+            fallback(text, done);
+        }
+    }
+
+    function fallback(text, cb) {
+        var ta = document.createElement('textarea');
+        ta.value = text;
+        ta.style.position = 'fixed';
+        ta.style.opacity = '0';
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand('copy'); } catch(e) {}
+        document.body.removeChild(ta);
+        cb();
+    }
+
+    function showToast() {
+        var t = document.getElementById('toast');
+        t.classList.add('show');
+        setTimeout(function() { t.classList.remove('show'); }, 2000);
+    }
+</script>
+
+</body>
+</html>
