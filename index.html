@@ -697,55 +697,64 @@ cd ~/work</pre>
     <div class="tab-content" id="tab-5">
         <div class="section">
             <h2>1. Supabase 이메일 인증</h2>
-            <ol style="padding-left:22px">
-                <li class="desc">Authentication → Providers → Email 활성화</li>
-                <li class="desc">Authentication → URL Configuration → Site URL 에 GitHub Pages URL 입력
-                    <p class="sub-desc">예) <code class="plain">https://username.github.io</code></p>
-                </li>
-                <li class="desc">Authentication → URL Configuration → Redirect URLs 입력
-                    <p class="sub-desc">예) <code class="plain">https://username.github.io/repo_name/</code></p>
-                </li>
-            </ol>
-            <p class="note" style="margin-top:10px">※ 이메일 인증 없이 바로 로그인하려면 "Confirm email" 비활성화</p>
+            <div class="step-section">
+                <h3>1) Email Provider 활성화</h3>
+                <p class="desc">- Authentication → Providers → Email 활성화</p>
+            </div>
+            <div class="step-section">
+                <h3>2) Site URL 설정</h3>
+                <p class="desc">- Authentication → URL Configuration → Site URL 에 GitHub Pages URL 입력</p>
+                <p class="sub-desc">예) <code class="plain">https://username.github.io</code></p>
+            </div>
+            <div class="step-section">
+                <h3>3) Redirect URLs 설정</h3>
+                <p class="desc">- Authentication → URL Configuration → Redirect URLs 입력</p>
+                <p class="sub-desc">예) <code class="plain">https://username.github.io/repo_name/</code></p>
+            </div>
+            <p class="note">※ 이메일 인증 없이 바로 로그인하려면 "Confirm email" 비활성화</p>
         </div>
 
         <div class="section">
             <h2>2. Google 인증</h2>
-            <ol style="padding-left:22px">
-                <li class="desc"><a class="url" href="https://console.cloud.google.com" target="_blank">https://console.cloud.google.com</a> 접속</li>
-                <li class="desc">프로젝트 생성</li>
-                <li class="desc">APIs &amp; Services → OAuth consent screen → External 선택 → 앱 이름/이메일 입력 후 저장</li>
-                <li class="desc">APIs &amp; Services → Credentials → Create Credentials → OAuth client ID
-                    <ul style="margin-top:6px">
-                        <li class="desc">Application type: <strong>Web application</strong></li>
-                        <li class="desc">Authorized redirect URIs 등록 (Supabase API URL 확인)
-                            <p class="note-sub">※ <code class="plain">https://[프로젝트ID].supabase.co/auth/v1/callback</code></p>
-                        </li>
-                    </ul>
-                </li>
-                <li class="desc">Supabase에 Google 등록
-                    <ul style="margin-top:6px">
-                        <li class="desc">Supabase 대시보드 → Authentication → Providers → <strong>Google</strong> 활성화</li>
-                        <li class="desc">Client ID, Client Secret 붙여넣기 → Save</li>
-                    </ul>
-                </li>
-            </ol>
+            <div class="step-section">
+                <h3>1) Google Cloud Console 접속</h3>
+                <p class="desc">- <a class="url" href="https://console.cloud.google.com" target="_blank">https://console.cloud.google.com</a> 접속</p>
+            </div>
+            <div class="step-section">
+                <h3>2) 프로젝트 생성</h3>
+            </div>
+            <div class="step-section">
+                <h3>3) OAuth consent screen 설정</h3>
+                <p class="desc">- APIs &amp; Services → OAuth consent screen → External 선택 → 앱 이름/이메일 입력 후 저장</p>
+            </div>
+            <div class="step-section">
+                <h3>4) OAuth client ID 생성</h3>
+                <p class="desc">- APIs &amp; Services → Credentials → Create Credentials → OAuth client ID</p>
+                <p class="desc">• Application type: <strong>Web application</strong></p>
+                <p class="desc">• Authorized redirect URIs 등록 (Supabase API URL 확인)</p>
+                <p class="note-sub">※ <code class="plain">https://[프로젝트ID].supabase.co/auth/v1/callback</code></p>
+            </div>
+            <div class="step-section">
+                <h3>5) Supabase에 Google 등록</h3>
+                <p class="desc">- Supabase 대시보드 → Authentication → Providers → <strong>Google</strong> 활성화</p>
+                <p class="desc">- Client ID, Client Secret 붙여넣기 → Save</p>
+            </div>
         </div>
 
         <div class="section">
             <h2>3. GitHub 인증</h2>
-            <ol style="padding-left:22px">
-                <li class="desc">GitHub → Settings → Developer settings → OAuth Apps → New OAuth App
-                    <ul style="margin-top:6px">
-                        <li class="desc">Application name: 자유</li>
-                        <li class="desc">Homepage URL: <code class="plain">https://username.github.io/repo-name/</code></li>
-                        <li class="desc">Authorization callback URL:
-                            <pre class="code-block" style="margin-top:6px">https://[프로젝트ID].supabase.co/auth/v1/callback</pre>
-                        </li>
-                    </ul>
-                </li>
-                <li class="desc">생성 후 <strong>Client ID</strong> 확인, <strong>Generate a new client secret</strong> 클릭해서 <strong>Client Secret</strong> 복사</li>
-            </ol>
+            <div class="step-section">
+                <h3>1) GitHub OAuth App 생성</h3>
+                <p class="desc">- GitHub → Settings → Developer settings → OAuth Apps → New OAuth App</p>
+                <p class="desc">• Application name: 자유</p>
+                <p class="desc">• Homepage URL: <code class="plain">https://username.github.io/repo-name/</code></p>
+                <p class="desc">• Authorization callback URL:</p>
+                <pre class="code-block">https://[프로젝트ID].supabase.co/auth/v1/callback</pre>
+            </div>
+            <div class="step-section">
+                <h3>2) Client Secret 생성 및 복사</h3>
+                <p class="desc">- 생성 후 <strong>Client ID</strong> 확인, <strong>Generate a new client secret</strong> 클릭하여 <strong>Client Secret</strong> 복사</p>
+            </div>
         </div>
     </div>
 
@@ -767,7 +776,7 @@ cd ~/work</pre>
                 <code class="copyable" onclick="copyCode(this)">specify init</code>
             </div>
 
-            <p class="ref-title">참조 1 &gt; 개발 워크플로우 진행 순서</p>
+            <p class="ref-title">참고 1 &gt; 개발 워크플로우 진행 순서</p>
             <table>
                 <thead>
                     <tr><th>명령어</th><th>설명</th><th>생성 파일</th><th>저장 위치</th></tr>
@@ -809,7 +818,7 @@ cd ~/work</pre>
             </ul>
 
             <div class="step-section">
-                <h3>설치</h3>
+                <h3>2) 설치</h3>
                 <code class="copyable" onclick="copyCode(this)">npx skills@latest add mattpocock/skills</code>
             </div>
         </div>
