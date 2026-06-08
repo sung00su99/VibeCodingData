@@ -306,6 +306,53 @@
         }
         .download-btn:hover { background: #0898A0; box-shadow: 0 2px 8px rgba(10,175,184,0.35); }
         .download-btn:active { background: #077980; }
+
+        /* ── 테이블 가로 스크롤 컨테이너 ── */
+        .table-scroll {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 10px 0 4px;
+        }
+        .table-scroll table { margin: 0; }
+
+        /* ── 반응형: 태블릿 (≤768px) ── */
+        @media (max-width: 768px) {
+            header { padding: 0 16px; }
+            .header-text h1 { font-size: 18px; }
+            .section { padding: 20px 18px; }
+            code.copyable { padding-right: 80px; font-size: 12.5px; }
+            code.copyable::after { font-size: 10px; right: 8px; }
+            table th, table td { padding: 8px 10px; font-size: 13px; }
+        }
+
+        /* ── 반응형: 모바일 (≤480px) ── */
+        @media (max-width: 480px) {
+            header { padding: 0 12px; }
+            .header-inner { flex-wrap: wrap; gap: 10px; padding: 12px 0; }
+            .header-text { flex: 1 1 100%; }
+            .header-text h1 { font-size: 16px; }
+            .header-text p { font-size: 11.5px; }
+            .header-right { width: 100%; justify-content: flex-end; gap: 10px; }
+            .header-logo { height: 26px; }
+            .download-btn { padding: 7px 12px; font-size: 12px; }
+
+            .tabs-wrapper { padding: 0 4px; }
+            .tab-btn { padding: 10px 10px; font-size: 11.5px; }
+
+            .content-wrapper { margin: 16px auto; padding: 0 10px 32px; }
+            .section { padding: 16px 14px; border-radius: 10px; }
+            h2 { font-size: 16px; }
+            h3 { font-size: 13.5px; }
+
+            code.copyable { font-size: 12px; padding: 8px 70px 8px 10px; }
+            code.copyable::after { font-size: 9.5px; right: 6px; }
+            pre.code-block { font-size: 12px; padding: 8px 10px; }
+            code.copyable-inline { font-size: 11.5px; padding: 2px 7px; }
+            table th, table td { padding: 7px 8px; font-size: 12px; }
+            .sub-desc { padding-left: 10px; }
+            .sub2-desc { padding-left: 20px; }
+            .note-sub { padding-left: 10px; }
+        }
     </style>
 </head>
 <body>
@@ -1025,6 +1072,15 @@ cd ~/work</pre>
         });
         lines.push('');
     }
+
+    /* 모든 테이블을 .table-scroll 래퍼로 감싸 모바일 가로 스크롤 지원 */
+    document.querySelectorAll('table').forEach(function(t) {
+        if (t.parentNode.classList.contains('table-scroll')) return;
+        var wrapper = document.createElement('div');
+        wrapper.className = 'table-scroll';
+        t.parentNode.insertBefore(wrapper, t);
+        wrapper.appendChild(t);
+    });
 </script>
 
 </body>
