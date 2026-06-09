@@ -712,6 +712,15 @@ cd ~/work</pre>
                 <p class="note">※ push 실행 중 원격에 최신 커밋이 있다면 오류 발생 — 먼저 pull 후 push</p>
             </div>
 
+            <div class="step-section">
+                <h3>8) GitHub Front-End 배포</h3>
+                <p class="desc">- git 접속 → 프로젝트 선택 → Setting → Pages</p>
+                <p class="desc">- "Build and deployment" 에서 "Deploy from a branch" 선택</p>
+                <p class="desc">- "Branch" 에서 None → Main / Root → Save</p>
+                <p class="note">※ root에 index.html 파일이 없다면 AI를 통해 docs 파일을 main으로 설정 후 /docs 선택</p>
+                <p class="desc">- 1~2분 후 상단에 접속 가능한 URL 생성</p>
+            </div>
+
         </div>
     </div>
 
@@ -762,6 +771,21 @@ cd ~/work</pre>
             <div class="step-section">
                 <h3>3) Table 생성</h3>
                 <p class="desc">- SQL Editor 실행 후 Table 생성 (직접 쿼리 실행)</p>
+            </div>
+
+            <div class="step-section">
+                <h3>4) 이메일 인증 비활성화 (이메일 인증 없이 로그인하는 경우)</h3>
+                <p class="desc">- 대시보드 → Authentication → Providers → Email</p>
+                <p class="desc">- Confirm email → OFF → Save</p>
+            </div>
+
+            <div class="step-section">
+                <h3>5) Supabase 허용 URL 등록</h3>
+                <p class="desc">- Supabase 대시보드 → Authentication → URL Configuration</p>
+                <p class="sub-desc"><strong>Site URL</strong> → GitHub URL 추가 (예: <code class="plain">https://username.github.io/repo_name</code>)</p>
+                <p class="sub2-desc">→ 이메일 인증 링크, 비밀번호 재설정 링크 등에 포함되는 기본 도메인</p>
+                <p class="sub-desc"><strong>Redirect URLs</strong> → GitHub URL 추가 (예: <code class="plain">https://username.github.io/repo_name</code>)</p>
+                <p class="sub2-desc">→ OAuth 로그인 완료 후, 이메일 인증 후 돌아올 수 있는 주소들</p>
             </div>
         </div>
     </div>
@@ -842,10 +866,19 @@ cd ~/work</pre>
                 <p class="desc">- uv 설치</p>
                 <code class="copyable" onclick="copyCode(this)">sudo snap install astral-uv --classic</code>
 
-                <p class="desc">- spec-kit 설치</p>
+                <p class="desc">- PATH 적용</p>
+                <code class="copyable" onclick="copyCode(this)">source ~/.bashrc</code>
+
+                <p class="desc">- specify-cli 설치</p>
                 <code class="copyable" onclick="copyCode(this)">uv tool install specify-cli --from git+https://github.com/github/spec-kit.git</code>
 
-                <p class="desc">- 프로그램 초기화</p>
+                <p class="desc">- PATH 등록</p>
+                <code class="copyable" onclick="copyCode(this)">uv tool update-shell && source ~/.bashrc</code>
+
+                <p class="desc">- specify 설치 확인</p>
+                <code class="copyable" onclick="copyCode(this)">specify --version</code>
+
+                <p class="desc">- 프로젝트 초기화</p>
                 <code class="copyable" onclick="copyCode(this)">specify init --here</code>
             </div>
 
@@ -893,6 +926,8 @@ cd ~/work</pre>
             <div class="step-section">
                 <h3>2) 설치</h3>
                 <code class="copyable" onclick="copyCode(this)">npx skills@latest add mattpocock/skills</code>
+                <p class="note">※ 프로젝트 폴더에 들어가서 실행</p>
+                <p class="desc">- 실행 → 사용할 오픈소스 선택 (Space bar 클릭) → Project 선택 (나머지는 전역 설치) → Symlink 선택 (파일 하나로 다른 에이전트 공유)</p>
             </div>
         </div>
     </div>
