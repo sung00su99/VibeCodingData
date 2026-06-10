@@ -427,23 +427,28 @@
             <h2>2. GIT 설정</h2>
 
             <div class="step-section">
-                <h3>1) GitHub 계정 생성</h3>
+                <h3>1) WSL GIT 설치</h3>
+                <code class="copyable" onclick="copyCode(this)">sudo apt update && sudo apt install git -y</code>
+            </div>
+
+            <div class="step-section">
+                <h3>2) GitHub 계정 생성</h3>
                 <p class="desc"><a class="url" href="https://github.com/" target="_blank">https://github.com/</a></p>
             </div>
 
             <div class="step-section">
-                <h3>2) 작업 디렉토리 생성 (GitHub에서 Repository 생성)</h3>
+                <h3>3) 작업 디렉토리 생성 (GitHub에서 Repository 생성)</h3>
                 <p class="desc"><a class="url" href="https://github.com/new" target="_blank">https://github.com/new</a></p>
             </div>
 
             <div class="step-section">
-                <h3>3) 작업 폴더 생성</h3>
+                <h3>4) 작업 폴더 생성</h3>
                 <pre class="code-block">mkdir ~/work
 cd ~/work</pre>
             </div>
 
             <div class="step-section">
-                <h3>4) git 설정</h3>
+                <h3>5) git 설정</h3>
                 <code class="copyable" onclick="copyCode(this)">git config --global user.name "사용자이름"</code>
                 <code class="copyable" onclick="copyCode(this)">git config --global user.email 이메일주소</code>
                 <p class="desc">• 다른 작업자의 변경 사항 Update(pull)을 할 경우 Merge 방식으로 처리</p>
@@ -482,7 +487,7 @@ cd ~/work</pre>
             <hr class="divider">
 
             <div class="step-section">
-                <h3>5) SSH 키 생성 및 설정</h3>
+                <h3>6) SSH 키 생성 및 설정</h3>
                 <p class="desc">• SSH 키 생성</p>
                 <code class="copyable" onclick="copyCode(this)">ssh-keygen</code>
                 <p class="desc">• 생성 키 확인</p>
